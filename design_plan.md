@@ -1,7 +1,55 @@
-# MK-TAN_INFL
-
-└── README.md                  # Maybe read it
----
+# MK-TAN_INFL  
+  
+  
+> Languages: C++, Go, and Python    
+  
+---  
+  
+## 00. Purpose  
+  
+This project outlines the structure of a modular, multi-platform control interface for agent-based communication. It defines a cleanroom, non-operational representation of task dispatch, agent tracking, and transport layering strategies common in distributed C2 infrastructure.  
+  
+All components are inert and simulate logical behavior only.  
+  
+---  
+  
+## 01. Top-Level Structure  
+  
+MK-TAN_INFL/  
+├── controller/                # Operator-side core (Rust)  
+│   ├── interface.rs           # CLI and control logic  
+│   ├── agents.rs              # Agent memory registry  
+│   ├── tasking.rs             # Task engine  
+│   └── transport.rs           # Transport abstraction stubs  
+│  
+├── agent/                     # Cross-platform implant stubs (C++ / Rust)  
+│   ├── beacon.cpp             # Beacon logic  
+│   ├── exec.cpp               # Task execution (windows-specific. Helps with anti-detection)  
+│   ├── shutdown.cpp           # Kill switch, shutdown triggers  
+│   └── transport.cpp          # Pluggable transport layer  
+│  
+├── protocol/                  # Message schema definitions  
+│   ├── agent.proto            # Protobuf schema (primary)  
+│   └── fallback.json          # Legacy/static format fallback  
+│  
+├── proxy/                     # Optional redirector node (Go)  
+│   └── main.go  
+│  
+├── interface/                 # Experimental operator TUI (Python)  
+│   └── tui.py  
+│  
+├── tools/                     # Mutator and entropy seeding tools  
+│   ├── mutator.py  
+│   └── seeder.py  
+│  
+├── persistence/               # Optional persistence modules (manual opt-in)  
+│   ├── win_regkey.cpp  
+│   └── linux_service_systemctl.cpp  
+│  
+├── LICENSE.md                 # Ethical/legal control license  
+├── DESIGN_PLAN.md             # Project structural blueprint  
+└── README.md                  # Maybe read it  
+---  
 
 
 ## 02. Architecture Philosophy
