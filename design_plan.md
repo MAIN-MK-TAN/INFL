@@ -45,9 +45,19 @@ MK-TAN_INFL/
 │   └── seeder.py  
 │  
 ├── persistence/               # Optional persistence modules (manual opt-in)  
-│   ├── win_regkey.cpp  
-│   └── linux_service_systemctl.cpp  
-│  
+│   ├── WIN32_regkey.cpp  
+│   ├── ELF32_service_systemctl.cpp  
+│   ├── WINx8664_regkey.cpp
+│   ├── ELFx8664_service_systemctl
+│   └── ELFUNIV_pers.bash
+│
+├── encryption                 # Encryption logic
+│   ├── server.rs
+│   ├── WIN32.cpp
+│   ├── ELF32.cpp
+│   └── EXPIR.py
+│
+│
 ├── LICENSE.md                 # Ethical/legal control license  
 ├── DESIGN_PLAN.md             # Project structural blueprint  
 └── README.md                  # Maybe read it
