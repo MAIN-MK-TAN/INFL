@@ -14,7 +14,9 @@ All components are inert and simulate logical behavior only.
 ---  
   
 ## 01. Top-Level Structure  
-  
+
+
+```
 MK-TAN_INFL/  
 ├── controller/                # Operator-side core (Rust)  
 │   ├── interface.rs           # CLI and control logic  
@@ -48,7 +50,8 @@ MK-TAN_INFL/
 │  
 ├── LICENSE.md                 # Ethical/legal control license  
 ├── DESIGN_PLAN.md             # Project structural blueprint  
-└── README.md                  # Maybe read it  
+└── README.md                  # Maybe read it
+```
 ---  
 
 
