@@ -1,7 +1,7 @@
 # MK-TAN_INFL  
   
   
-> Languages: C++, Go, and Python    
+> Languages: C++, Go, Rust, and Python    
   
 ---  
   
