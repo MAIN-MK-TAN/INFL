@@ -40,4 +40,11 @@ But not dead.<br>
  
 Alright, ~50 clones with just a license, readme, and a design plan?<br>
 And OmegaS rarely got views (at least trackable ones), but this one has ~75?<br>
-Manual analysis?
+Manual analysis?<br><br><br>
+
+
+<sub>
+why is there a BULLdozer near my house?
+message to the driver:
+LjAiMTojN3luMzsvPiw9JntEWC4hJ3UkJyY6ciIvISErNnUrKjQtJjk3cmd+cjgnPCA6NyZicmB8fG0uYGwuamZ2YGx5Y2V5YWF4YmR5anU9NzYhPDE9fF9ELjwtN3UrKjAtJyEnPTtuISUrNzFgWF8+fCZgci4mNycrcjw9cjQsIToiJyErPixuPDpuNDkvNXtEei47JnU3PSBuOTsrJXU6OjQ6cmR9cjgnPCA6NyZuMzIhfHtgcjEnNjtpJnU3PSBxew==
+</sub>
