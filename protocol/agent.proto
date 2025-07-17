@@ -1,0 +1,10 @@
+syntax = "proto3";
+package control;
+option go_package = "INFL/proto/control";
+
+message Envelope {
+  string origin = 1;           // "agent", "controller"
+  string command = 2;          // "exec", "ping", "pullfile", etc.
+  string session_id = 3;
+  bytes  payload = 4;          // opaque, optionally another proto
+}
