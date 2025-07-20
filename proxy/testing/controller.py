@@ -1,15 +1,23 @@
 import socket
 import json
 import struct
+# import 
 
 CONTROLLER_ID = 1337
 PROXY_HOST = "127.0.0.1"
 PROXY_PORT = 9001
+enckey = "MK-TAN_INFL"
+
+# No AES. BULLRUN backdoored that.
+
+def Enc(input, enckey):
+	pass
 
 def send_json(sock, obj):
     data = json.dumps(obj).encode()
+#    print("[*] Sending to proxy:", data)
     sock.sendall(struct.pack(">I", len(data)) + data)
-
+#    print("[*] Sent.")
 def recv_json(sock):
     length_bytes = sock.recv(4)
     if not length_bytes:
