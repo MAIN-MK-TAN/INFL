@@ -1,30 +1,33 @@
-###/ MODULES \###
 import json,socket,struct
-###/ VARS \###
-id="1337"
-ip="127.0.0.1"
-pt=9001
-###/ CODE \###
-def sndjsn(conc,dta):
- encoded=json.dumps(dta).encode()
- conc.sendall(struct.pack(">I",len(encoded))+encoded)
-def rcvjsn(conc):
- l=struct.unpack(">I",conc.recv(4))[0]
- d=b""
- while len(d)<l:
-  c=conc.recv(l-len(d))
-  if not c:raise ConnectionError("Disconnected during recv")
-  d+=c
- return json.loads(d.decode())
-def identify(conc,id):
- sndjsn(conc,{"controller_id":int(id)})
- print(f"Identified to {ip}:{pt} with id {id}")
-def conn2srvr(ip,pt):
- conc=socket.create_connection((ip,pt))
- identify(conc,id)
- while 1:
-  x=input(">>> ")
-  if not x:continue
-  sndjsn(conc,{"cmd":x})
-  print(rcvjsn(conc).get("output",""))
-conn2srvr(ip,pt)
+id="1337";ip="127.0.0.1";pt=9001
+def sndjsn(c,d):
+ try:e=json.dumps(d).encode();c.sendall(struct.pack(">I",len(e))+e)
+ except Exception as ex:print(f"[sndjsn err]{ex}");raise
+def rcvjsn(c):
+ try:
+  h=c.recv(4)
+  if len(h)<4:raise ConnectionError("No header/conn lost")
+  l=struct.unpack(">I",h)[0];b=b""
+  while len(b)<l:
+   p=c.recv(l-len(b))
+   if not p:raise ConnectionError("Mid-transfer drop")
+   b+=p
+  return json.loads(b.decode())
+ except Exception as ex:print(f"[rcvjsn err]{ex}");raise
+def identify(c):
+ try:sndjsn(c,{"controller_id":int(id)});print(f"ID {id}→{ip}:{pt}")
+ except Exception as ex:print(f"[identify err]{ex}");raise
+def conn():
+ try:
+  c=socket.create_connection((ip,pt));identify(c)
+  while 1:
+   try:
+    x=input(">>> ").strip()
+    if not x:continue
+    sndjsn(c,{"cmd":x})
+    r=rcvjsn(c)
+    print(r.get("output","[no output]"))
+   except (EOFError,KeyboardInterrupt):print("\n[exit]");break
+   except Exception as ex:print(f"[loop err]{ex}");break
+ except Exception as ex:print(f"[conn err]{ex}")
+if __name__=="__main__":conn()
