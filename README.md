@@ -4,7 +4,7 @@ MK-TAN_INFL
 > [REDACTED]-grade C2 interface.
 Part of the MK-TAN framework family.
  
-Status: Under active development.
+Status: Making encryption logic and/or multi-protocol logic.
 
 ---
 
@@ -17,4 +17,3 @@ Dual-use applications are strictly prohibited.
 ---
 
 And yes, im still watching the watchers. You know who you are.
-
