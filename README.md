@@ -4,7 +4,8 @@ MK-TAN_INFL
 > [REDACTED]-grade C2 interface.
 Part of the MK-TAN framework family.
  
-Status: Making encryption logic and/or multi-protocol logic.
+Status: Working offline.<br>
+As of 20250728 I am working on projects offline.
 
 ---
 
